@@ -1,1 +1,2 @@
-# K8s-demo
+# Kubernetes Demo project
+#
