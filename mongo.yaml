@@ -1,46 +1,5 @@
-#Both the Deployment and Service are in this file, cause the belong together
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo-deployment
-  labels:
-    app: mongo
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: mongo
-  template:
-    metadata:
-      labels:
-        app: mongo
-    spec:
-      containers:
-      - name: mongoDB
-        image: mongo:7.0.7-jammy
-        ports:
-        - containerPort: 27017
+  name: myapp
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongo-service
-spec:
-  selector:
-    app: mongo
-  ports:
-    - protocol: TCP
-      port: 27017
-      targetPort: 27017
-      env: 
-       - name: MONGO_INITDB_ROOT_USERNAME
-         valueFrom:
-           secretkeyref:
-             name: mongo-secret
-             key: mongo-user
-       - password: MONGO_INITDB_ROOT_PASSWORD
-         valueFrom:
-           secretkeyref:
-             name: mongo-secret
-             key: mongo-password

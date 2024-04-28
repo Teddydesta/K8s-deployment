@@ -1,6 +1,7 @@
-apiVerion: v1
-kind: ConfigMap
-metadata:
+apiVersion: v1
+kind: COnfigMap
+metadata: 
   name: mongo-config
-data:
+data: 
   mongo-url: mongo-service
+   
