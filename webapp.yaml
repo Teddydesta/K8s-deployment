@@ -47,7 +47,7 @@ spec:
               
 ---
 apiVersion: v1
-kind: service
+kind: Service
 metadata:
   name: webapp-service
 spec:
@@ -58,6 +58,6 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-      NodePort: 31000
+      nodePort: 31000
     
      
