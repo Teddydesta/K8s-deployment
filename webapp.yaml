@@ -1,53 +1,44 @@
-#Both the Deployment and Service are in this file, cause the belong together
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp-deployment
   labels:
     app: webapp
+
 spec:
   replicas: 1
-  selector:
+  selector: 
     matchLabels:
       app: webapp
-  template:
+      #configuration for pods
+  template: 
     metadata:
       labels:
         app: webapp
     spec:
       containers:
-      - name: mongoDB
+      - name: webapp
         image: nanajanashia/k8s-demo-app:v1.0
+        resources: 
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:  
+            cpu: "0.5"
+            memory: "256Mi"
         ports:
-        - containerPort: 5000
-      env: 
-       - name: USER_NAME
-         valueFrom:
-           secretkeyref:
-             name: mongo-secret
-             key: mongo-user
-       - name: USER_PWD
-         valueFrom:
-           secretkeyref:
-             name: mongo-secret
-             key: mongo-password
-       - name: DB_URL
-         valueFrom: 
-           configMapKeyref:
-           name: mongo-config
-           key: mongo-url
-
+        - containerPort: 3000
 ---
 apiVersion: v1
-kind: Service
+kind: service
 metadata:
   name: webapp-service
 spec:
-  type: NodePort
-  selector:
+  selector: 
     app: webapp
   ports:
     - protocol: TCP
-      port: 5000
-      targetPort: 5000
-      NodePort: 32000
+      port: 3000
+      targetPort: 3000
+    
+     
