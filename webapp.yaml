@@ -28,17 +28,36 @@ spec:
             memory: "256Mi"
         ports:
         - containerPort: 3000
+        env:
+        - name: USER_NAME
+          valueFrom: 
+            secretKeyRef: 
+              name: mongo-secret
+              key: mongo-user
+        - name: USER_PWD
+          valueFrom: 
+            secretKeyRef: 
+              name: mongo-secret
+              key: mongo-password
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: mongo-url
+              
 ---
 apiVersion: v1
 kind: service
 metadata:
   name: webapp-service
 spec:
+  type: NodePort
   selector: 
     app: webapp
   ports:
     - protocol: TCP
       port: 3000
       targetPort: 3000
+      NodePort: 31000
     
      
